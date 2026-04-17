@@ -6,6 +6,6 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    {/* <div className='crt-overlay'></div> */}
+    <div className='crt-overlay'></div>
   </StrictMode>,
 )

@@ -23,7 +23,6 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      # --- NEW STEP: Join Tailscale Network ---
       - name: Connect to Tailscale
         uses: tailscale/github-action@v2
         with:
@@ -39,5 +38,10 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           
-          # The brackets around $SERVER_IP have been removed!
           rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" dist/ $SERVER_USER@$SERVER_IP:/var/www/porto/
+      
+      - name: Generate Deployment Summary
+        if: success() 
+        run: |
+          echo "Pushed to the Scaleway VPS." >> $GITHUB_STEP_SUMMARY
+          echo "[https://porto.theincorrect.one](https://porto.theincorrect.one)" >> $GITHUB_STEP_SUMMARY
