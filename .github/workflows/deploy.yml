@@ -3,7 +3,7 @@ name: Build and Deploy React App
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -23,6 +23,7 @@ jobs:
       - name: Build Project
         run: npm run build
 
+      # --- NEW STEP: Join Tailscale Network ---
       - name: Connect to Tailscale
         uses: tailscale/github-action@v2
         with:
@@ -38,4 +39,5 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           
+          # The brackets around $SERVER_IP have been removed!
           rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" dist/ $SERVER_USER@$SERVER_IP:/var/www/porto/
