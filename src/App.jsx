@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       <section id="center">
-        <p> Hi </p>
+        <p> Hello World. Deploy test </p>
 
 
         <Rnd
