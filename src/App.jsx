@@ -1,38 +1,93 @@
-import { useState } from 'react'
-import { Rnd } from "react-rnd";
-import './App.css'
+import { useState } from 'react';
+import WindowFrame from './components/WindowFrame';
+import { Taskbar } from './components/Taskbar';
+import { StartMenu } from './components/StartMenu';
+import { appRegistry } from './config/appRegistry';
+import { useWindowManager } from './hooks/useWindowManager';
+import './App.css';
 
-const style = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "solid 1px #ddd",
-  background: "#f0f0f0",
-};
 
 function App() {
-  const [count, setCount] = useState(0)
+    const {
+        openApps,
+        bringToFront,
+        handleTaskbarDragEnd,
+        openWindow,
+        minimizeWindow,
+        handleTaskbarClick,
+        closeWindow } = useWindowManager();
 
-  return (
-    <>
-      <section id="center">
-        <p> Hello World. Deploy testing the site! </p>
+    const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
+    const handleDesktopClick = () => {
+        if (isStartMenuOpen) setIsStartMenuOpen(false);
+    };
 
-        <Rnd
-        style={style}
-          default={{
-            x: 0,
-            y: 0,
-            width: 320,
-            height: 200,
-          }}
+    return (
+        <div
+            onClick={handleDesktopClick}
+            style={{
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "#008080",
+                position: "relative",
+                overflow: "hidden"
+            }}
         >
-          Rnd
-        </Rnd>
-      </section>
-    </>
-  )
+            {openApps.map((windowData) => {
+                const AppComponent = appRegistry[windowData.appId];
+                if (!AppComponent) return null;
+
+                return (
+                    <WindowFrame
+                        key={windowData.id}
+                        title={windowData.title}
+                        icon={windowData.icon}
+                        defaultPosition={windowData.position}
+                        zaxis={windowData.zAxis}
+                        isMinimized={windowData.isMinimized}
+                        onFocus={() => bringToFront(windowData.id)}
+                        onMinimize={() => minimizeWindow(windowData.id)}
+                        onClose={() => closeWindow(windowData.id)}
+                    >
+                        <AppComponent windowId={windowData.id} />
+                    </WindowFrame>
+                );
+            })}
+
+
+            {isStartMenuOpen && (
+                <StartMenu
+                    onLaunchApp={openWindow}
+                    closeMenu={() => setIsStartMenuOpen(false)}
+                />
+            )}
+
+            <Taskbar
+                openApps={openApps}
+                onDragEnd={handleTaskbarDragEnd}
+                onAppClick={handleTaskbarClick}
+                toggleStartMenu={() => setIsStartMenuOpen(!isStartMenuOpen)}
+            />
+
+            <div style={{
+                position: 'absolute',
+                bottom: '60px',
+                right: '20px',
+                color: 'rgba(255, 255, 255, 0.45)',
+                fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+                fontSize: '13px',
+                textAlign: 'right',
+                zIndex: 99999,
+                pointerEvents: 'none',
+                userSelect: 'none'
+            }}>
+                <div style={{ fontWeight: 'bold' }}>porto.theincorrect.one</div>
+                <div>A Windows-Like site for Learning React.</div>
+                <div>AI(LLMs) were used for help.</div>
+            </div>
+        </div>
+    );
 }
 
-export default App
+export default App;

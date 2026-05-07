@@ -1,4 +1,27 @@
 /* Add this class to an empty div placed at the very bottom of your main App component */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Force the body and html to exactly match the screen with no overflow */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 3. Make sure the React root element stretches to fill the body */
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .crt-overlay {
   position: fixed;
   top: 0; 

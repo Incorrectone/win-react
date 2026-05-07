@@ -1,16 +1,28 @@
-# React + Vite
+# React Based Portfolio site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The goal is to create Windows-Like Themed portfolio site, that is presentable.
 
-Currently, two official plugins are available:
+This site uses React, and maybe not the best practices!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Dependencies
+- [vite](https://vite.dev/)
+- [ReactJS](https://react.dev/)
+- [react-rnd](https://www.npmjs.com/package/react-rnd)
+- [React-dnd](https://react-dnd.github.io/react-dnd/about)
+- [Open Meteo for system tray weather](https://open-meteo.com/)
 
-## React Compiler
+## To run
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install # To install
+npm run dev -- --host # to run the site
+```
 
-## Expanding the ESLint configuration
+## AI Usage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Full discloser: AI (LLMs) was used to help create this repository, 
+however every piece of code suggested/pasted was reviewed by a human.
+
+## License
+
+idk
